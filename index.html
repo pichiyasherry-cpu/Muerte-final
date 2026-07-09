@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SecureWeb Manager — Versión fácil</title>
+<link rel="stylesheet" href="estilos.css" />
+</head>
+<body>
+<div id="app">
+
+  <!-- ============================================================ TOPBAR -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="mark">🔐</span>
+      <span class="name">SecureWeb Manager<small>Guía sencilla, paso a paso</small></span>
+    </div>
+    <span id="topbarModuleName" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0);">Mi cuenta</span>
+    <div class="session-pill" id="sessionPill">
+      <span class="dot"></span>
+      <span id="sessionUserLabel">No has entrado</span>
+      <span class="clock" id="liveClock">--:--:--</span>
+    </div>
+  </header>
+
+  <!-- ================================================================ NAV -->
+  <nav class="nav" id="mainNav">
+    <button data-target="mod-acceso" class="active">
+      <span class="num">1</span>
+      <span class="nav-label">👤 Mi cuenta</span>
+      <span class="nav-sub">Crear cuenta o entrar</span>
+    </button>
+    <button data-target="mod-regex">
+      <span class="num">2</span>
+      <span class="nav-label">🔎 Buscar patrones</span>
+      <span class="nav-sub">Probar reglas de texto</span>
+    </button>
+    <button data-target="mod-cripto">
+      <span class="num">3</span>
+      <span class="nav-label">🔒 Mensajes secretos</span>
+      <span class="nav-sub">Encriptar / descifrar</span>
+    </button>
+    <button data-target="mod-cookies">
+      <span class="num">4</span>
+      <span class="nav-label">🍪 Cookies</span>
+      <span class="nav-sub">Lo que recuerda el navegador</span>
+    </button>
+    <button data-target="mod-storage">
+      <span class="num">5</span>
+      <span class="nav-label">🗄️ Memoria guardada</span>
+      <span class="nav-sub">Datos guardados aquí</span>
+    </button>
+    <button data-target="mod-dashboard">
+      <span class="num">6</span>
+      <span class="nav-label">📊 Resumen general</span>
+      <span class="nav-sub">Todo de un vistazo</span>
+    </button>
+  </nav>
+
+  <!-- =============================================================== MAIN -->
+  <main class="content">
+
+    <!-- ================================================= 1 · MI CUENTA -->
+    <section class="module active" id="mod-acceso">
+      <div class="module-head">
+        <div class="eyebrow">Paso 1</div>
+        <h2>Crea tu cuenta o inicia sesión</h2>
+        <p>Aquí puedes registrarte como en cualquier app, y luego entrar con tu usuario y contraseña.</p>
+      </div>
+
+      <div class="explain">
+        <span class="icon">💡</span>
+        <div><b>¿Qué está pasando aquí?</b> El programa revisa lo que escribes mientras lo escribes, para asegurarse
+        de que tu correo, tu teléfono y tu contraseña tengan un formato correcto y seguro — igual que cuando una app
+        te dice "esta contraseña es muy débil".</div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="tab-registro">✏️ Crear cuenta nueva</button>
+        <button class="tab-btn" data-tab="tab-login">🔑 Ya tengo cuenta</button>
+      </div>
+
+      <!-- ------------------------------------------------ REGISTRO -->
+      <div class="tab-panel" id="tab-registro">
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>📝 Formulario de registro</h3>
+            <div class="card-sub">Llena tus datos. Verás una marca de color mientras escribes.</div>
+            <div class="alert" id="registroAlert"></div>
+
+            <form id="formRegistro" novalidate>
+              <div class="field" id="f-nombre">
+                <label for="in-nombre">Tu nombre completo</label>
+                <input type="text" id="in-nombre" placeholder="Ej. Ana María López" autocomplete="off" />
+                <div class="hint">Escribe tu nombre y apellido, solo letras.</div>
+                <div class="error">🔴 Falta escribir el nombre completo (nombre y apellido).</div>
+              </div>
+
+              <div class="field" id="f-correo">
+                <label for="in-correo">Tu correo electrónico</label>
+                <input type="text" id="in-correo" placeholder="ejemplo@gmail.com" autocomplete="off" />
+                <div class="hint">Solo se aceptan correos de: Gmail, Outlook, Yahoo o edu.gt</div>
+                <div class="error">🔴 Ese correo no es válido o no es de un proveedor permitido.</div>
+              </div>
+
+              <div class="row-2">
+                <div class="field" id="f-telefono">
+                  <label for="in-telefono">Tu número de teléfono</label>
+                  <input type="text" id="in-telefono" placeholder="55551234" maxlength="9" autocomplete="off" />
+                  <div class="hint">Solo números, 8 dígitos.</div>
+                  <div class="error">🔴 Deben ser exactamente 8 números.</div>
+                </div>
+                <div class="field" id="f-nacimiento">
+                  <label for="in-nacimiento">Tu fecha de nacimiento</label>
+                  <input type="date" id="in-nacimiento" />
+                  <div class="hint">Debes tener más de 13 años.</div>
+                  <div class="error">🔴 Revisa la fecha, algo no cuadra.</div>
+                </div>
+              </div>
+
+              <div class="field" id="f-usuario">
+                <label for="in-usuario">Elige un nombre de usuario</label>
+                <input type="text" id="in-usuario" placeholder="Ej. ana2024" autocomplete="off" />
+                <div class="hint">Entre 8 y 15 letras/números, debe empezar con letra y llevar al menos un número.</div>
+                <div class="error">🔴 Ese usuario no cumple las reglas de arriba.</div>
+              </div>
+
+              <div class="field" id="f-password">
+                <label for="in-password">Crea una contraseña segura</label>
+                <input type="password" id="in-password" placeholder="Escribe tu contraseña" autocomplete="off" />
+                <div class="strength-meter">
+                  <div class="strength-track"><div class="strength-fill" id="strengthFill"></div></div>
+                  <div class="strength-label" id="strengthLabel">Aún no has escrito nada</div>
+                </div>
+                <div class="hint">Debe tener al menos 10 caracteres, con mayúscula, minúscula, número y un símbolo (como * o #).</div>
+                <div class="error">🔴 Tu contraseña todavía no es lo bastante segura.</div>
+              </div>
+
+              <div class="field" id="f-password2">
+                <label for="in-password2">Escribe la contraseña otra vez</label>
+                <input type="password" id="in-password2" placeholder="Repite tu contraseña" autocomplete="off" />
+                <div class="error">🔴 No coincide con la contraseña de arriba.</div>
+              </div>
+
+              <div class="actions">
+                <button type="submit" class="btn btn-primary">✅ Crear mi cuenta</button>
+                <button type="reset" class="btn btn-ghost">🧹 Borrar todo</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="card">
+            <h3>💪 ¿Qué tan segura es tu contraseña?</h3>
+            <div class="card-sub">Esto se actualiza solo, mientras escribes tu contraseña a la izquierda.</div>
+            <div class="field">
+              <label>Nivel de seguridad</label>
+              <div class="strength-track" style="height:16px;">
+                <div class="strength-fill" id="strengthFillBig" style="height:16px;"></div>
+              </div>
+              <div class="strength-label" id="strengthLabelBig" style="margin-top:10px; font-size:14.5px;">Escribe una contraseña para ver el resultado aquí</div>
+            </div>
+            <hr class="divider">
+            <div class="small text-dim" style="font-weight:800;">Lo que se revisa:</div>
+            <ul class="small text-dim" id="strengthCriteria" style="padding-left:20px; line-height:2.1;">
+              <li id="crit-len">Al menos 10 caracteres</li>
+              <li id="crit-upper">Una letra MAYÚSCULA</li>
+              <li id="crit-lower">Una letra minúscula</li>
+              <li id="crit-num">Un número</li>
+              <li id="crit-special">Un símbolo (# $ % * etc.)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ------------------------------------------------ LOGIN -->
+      <div class="tab-panel" id="tab-login" style="display:none;">
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>🔑 Inicia sesión</h3>
+            <div class="card-sub">Escribe el usuario y la contraseña que creaste antes.</div>
+            <div class="alert" id="loginAlert"></div>
+            <form id="formLogin">
+              <div class="field">
+                <label for="li-usuario">Nombre de usuario</label>
+                <input type="text" id="li-usuario" autocomplete="off" />
+              </div>
+              <div class="field">
+                <label for="li-password">Contraseña</label>
+                <input type="password" id="li-password" autocomplete="off" />
+              </div>
+              <div class="actions">
+                <button type="submit" class="btn btn-primary">➡️ Entrar</button>
+                <button type="button" class="btn btn-danger" id="btnLogout">🚪 Salir</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="card">
+            <h3>👋 Mensaje de bienvenida</h3>
+            <div class="card-sub">El navegador recuerda cuándo entraste la última vez.</div>
+            <div id="welcomeBox">
+              <p class="text-faint small">Todavía no has iniciado sesión.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================= 2 · PATRONES DE TEXTO -->
+    <section class="module" id="mod-regex">
+      <div class="module-head">
+        <div class="eyebrow">Paso 2</div>
+        <h2>Buscador de patrones en un texto</h2>
+        <p>Un "patrón" es como una regla de búsqueda. Por ejemplo: "encuéntrame todas las palabras que empiecen con mayúscula".</p>
+      </div>
+
+      <div class="explain">
+        <span class="icon">💡</span>
+        <div><b>¿Para qué sirve?</b> Es la misma herramienta que usa el "Buscar y reemplazar" de Word, pero más
+        potente. Escribe una regla, un texto de prueba, y presiona un botón para ver qué encuentra.</div>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>✏️ Escribe tu búsqueda</h3>
+          <div class="field">
+            <label for="rx-pattern">Regla de búsqueda (patrón)</label>
+            <input type="text" id="rx-pattern" placeholder="\b[A-Z][a-z]+\b" value="\b[A-Z][a-z]+\b" />
+            <div class="hint">Ejemplo ya cargado: busca palabras que empiezan con mayúscula.</div>
+          </div>
+          <div class="row-2">
+            <div class="field">
+              <label for="rx-flags">Opciones</label>
+              <input type="text" id="rx-flags" placeholder="g" value="g" />
+              <div class="hint">"g" = buscar en todo el texto</div>
+            </div>
+            <div class="field">
+              <label for="rx-replace">Texto de reemplazo</label>
+              <input type="text" id="rx-replace" placeholder="***" value="***" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="rx-text">Texto donde quieres buscar</label>
+            <textarea id="rx-text" rows="5">Ana y Carlos viajaron a Guatemala en Julio de 2026.</textarea>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary" id="btnRxTest">¿Existe? (test)</button>
+            <button class="btn btn-teal" id="btnRxExec">Mostrar todas (exec)</button>
+            <button class="btn btn-ghost" id="btnRxReplace">Reemplazar (replace)</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>📋 Resultado</h3>
+          <div class="alert" id="rxAlert"></div>
+          <div id="rxResult">
+            <p class="text-faint small">Aquí verás lo que encontró la búsqueda.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================= 3 · MENSAJES SECRETOS -->
+    <section class="module" id="mod-cripto">
+      <div class="module-head">
+        <div class="eyebrow">Paso 3</div>
+        <h2>Convierte tu mensaje en un código secreto</h2>
+        <p>Cambia las vocales de tu texto por símbolos (A→@1, E→#2, I→&3, O→*4, U→%5) y luego puedes devolverlo a la normalidad.</p>
+      </div>
+
+      <div class="explain">
+        <span class="icon">💡</span>
+        <div><b>¿Para qué sirve?</b> Es una versión simple de cómo funciona "cifrar" información: tomas un mensaje,
+        lo transformas con una regla, y solo alguien que conoce la regla puede regresarlo a su forma original.</div>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>✍️ Tu mensaje</h3>
+          <div class="field">
+            <label for="crypto-input">Escribe (o pega) tu texto aquí</label>
+            <textarea id="crypto-input" rows="6" placeholder="Escribe aquí el mensaje...">Reunión de seguridad a las once</textarea>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary" id="btnEncrypt">🔒 Convertir a código secreto</button>
+            <button class="btn btn-teal" id="btnDecrypt">🔓 Devolver a la normalidad</button>
+            <button class="btn btn-ghost" id="btnCryptoClear">🧹 Limpiar</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>📄 Resultado</h3>
+          <div class="field">
+            <label>Texto resultante</label>
+            <textarea id="crypto-output" rows="6" readonly></textarea>
+          </div>
+          <div class="grid grid-3" style="margin-top:8px;">
+            <div class="stat-card">
+              <div class="stat-label">Letras antes</div>
+              <div class="stat-value" id="cryptoBefore">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Letras después</div>
+              <div class="stat-value" id="cryptoAfter">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Última vez</div>
+              <div class="stat-value" id="cryptoWhen" style="font-size:15px;">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:18px;">
+        <div class="flex-between">
+          <h3 class="mt-0">🗂️ Tus mensajes anteriores <span class="badge badge-gold" id="cryptoHistCount">0</span></h3>
+          <button class="btn btn-ghost btn-sm" id="btnClearCryptoHist">Borrar historial</button>
+        </div>
+        <div class="card-sub">Se guardan automáticamente para que no los pierdas.</div>
+        <div id="cryptoHistList"></div>
+      </div>
+    </section>
+
+    <!-- ================================================= 4 · COOKIES -->
+    <section class="module" id="mod-cookies">
+      <div class="module-head">
+        <div class="eyebrow">Paso 4</div>
+        <h2>Lo que el navegador recuerda de ti (cookies)</h2>
+        <p>Cuando iniciaste sesión, el navegador guardó automáticamente quién eres, cuándo entraste y cuántas veces lo has hecho.</p>
+      </div>
+
+      <div class="explain">
+        <span class="icon">💡</span>
+        <div><b>¿Qué es una cookie?</b> Es una notita pequeñita que el navegador guarda por ti. Por ejemplo, así es
+        como una tienda en línea recuerda lo que dejaste en tu carrito, o cómo una página recuerda que ya iniciaste sesión.</div>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>➕ Crear una notita (cookie) de prueba</h3>
+          <div class="field">
+            <label for="ck-name">Nombre de la notita</label>
+            <input type="text" id="ck-name" placeholder="Ej. colorFavorito" />
+          </div>
+          <div class="field">
+            <label for="ck-value">¿Qué quieres que recuerde?</label>
+            <input type="text" id="ck-value" placeholder="Ej. azul" />
+          </div>
+          <div class="field">
+            <label for="ck-days">¿Por cuántos días la recuerda?</label>
+            <input type="number" id="ck-days" value="7" min="1" max="365" />
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary" id="btnCkSave">💾 Guardar</button>
+            <button class="btn btn-danger" id="btnCkClearAll">🗑️ Borrar todas</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>📌 Lo que el navegador recuerda ahora <span class="badge badge-gold" id="ckCount">0</span></h3>
+          <div class="card-sub">Puedes cambiar o borrar cada una.</div>
+          <div id="ckList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================= 5 · MEMORIA GUARDADA -->
+    <section class="module" id="mod-storage">
+      <div class="module-head">
+        <div class="eyebrow">Paso 5</div>
+        <h2>Toda la memoria que guarda este programa</h2>
+        <p>Hay dos tipos: la que se queda para siempre en tu navegador, y la que se borra cuando lo cierras.</p>
+      </div>
+
+      <div class="explain">
+        <span class="icon">💡</span>
+        <div><b>Piensa en dos cajones:</b> uno permanente (guarda tus usuarios y preferencias para siempre) y uno
+        temporal (anota lo que haces mientras usas el programa, y se vacía cuando cierras la pestaña).</div>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>🗄️ Cajón permanente: usuarios guardados <span class="badge badge-gold" id="lsUserCount">0</span></h3>
+          <div class="row-2">
+            <input type="text" id="lsSearch" placeholder="🔎 Buscar un usuario..." />
+            <button class="btn btn-ghost btn-sm" id="btnLsExport">⬇️ Descargar lista</button>
+          </div>
+          <div id="lsUserList" style="margin-top:14px;"></div>
+        </div>
+
+        <div class="card">
+          <h3>🎨 Tus preferencias</h3>
+          <div class="card-sub">Se guardan para la próxima vez que abras el programa.</div>
+          <div class="field">
+            <label for="pref-accent">Color favorito de la app</label>
+            <select id="pref-accent">
+              <option value="gold">Ámbar (predeterminado)</option>
+              <option value="teal">Verde agua</option>
+              <option value="blue">Azul</option>
+              <option value="red">Rojo</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="pref-density">¿Cómo prefieres ver la información?</label>
+            <select id="pref-density">
+              <option value="cómoda">Espaciada (más cómoda)</option>
+              <option value="compacta">Compacta</option>
+            </select>
+          </div>
+          <button class="btn btn-primary btn-sm" id="btnSavePref">💾 Guardar preferencias</button>
+
+          <hr class="divider">
+
+          <h3>⏱️ Cajón temporal: tu sesión de hoy</h3>
+          <div class="card-sub">Esto se borra cuando cierras el navegador.</div>
+          <div class="grid grid-3">
+            <div class="stat-card">
+              <div class="stat-label">Tiempo usando la app</div>
+              <div class="stat-value" id="ssTime" style="font-size:22px;">0s</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Secciones visitadas</div>
+              <div class="stat-value" id="ssPages" style="font-size:22px;">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Cosas que hiciste</div>
+              <div class="stat-value" id="ssActions" style="font-size:22px;">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================= 6 · RESUMEN GENERAL -->
+    <section class="module" id="mod-dashboard">
+      <div class="module-head">
+        <div class="eyebrow">Paso 6</div>
+        <h2>Resumen de todo el sistema</h2>
+        <p>Un solo lugar donde ver, de un vistazo, todo lo que ha pasado: cuántas cuentas hay, cuántas notitas (cookies) hay activas, y más.</p>
+      </div>
+
+      <div class="grid grid-3" style="margin-bottom:18px;">
+        <div class="stat-card">
+          <div class="stat-icon">👤</div>
+          <div class="stat-label">Cuentas creadas</div>
+          <div class="stat-value" id="dashUsers">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🍪</div>
+          <div class="stat-label">Cookies activas</div>
+          <div class="stat-value" id="dashCookies">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🔒</div>
+          <div class="stat-label">Mensajes secretos guardados</div>
+          <div class="stat-value" id="dashCrypto">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🗄️</div>
+          <div class="stat-label">Cosas en el cajón permanente</div>
+          <div class="stat-value" id="dashLS">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⏱️</div>
+          <div class="stat-label">Cosas en el cajón temporal</div>
+          <div class="stat-value" id="dashSS">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">✅</div>
+          <div class="stat-label">Acciones de hoy</div>
+          <div class="stat-value" id="dashActions">0</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="flex-between">
+          <h3 class="mt-0">📋 Lista de cuentas creadas</h3>
+          <button class="btn btn-ghost btn-sm" id="btnRefreshDash">🔄 Actualizar</button>
+        </div>
+        <div class="card-sub">Se arma sola con la información guardada.</div>
+        <table class="data-table" id="dashTable">
+          <thead>
+            <tr><th>Usuario</th><th>Se registró el</th><th>Última vez que entró</th></tr>
+          </thead>
+          <tbody id="dashTableBody">
+            <tr class="empty-row"><td colspan="3">Todavía no hay cuentas creadas.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================================================== ACTIVITY TICKER -->
+  <div class="activity-ticker">
+    <span class="tick-label">● en vivo</span>
+    <span class="tick-feed" id="tickFeed">Bienvenido a SecureWeb Manager.</span>
+  </div>
+
+</div>
+
+<!-- Mismo motor por dentro que la versión técnica: los archivos .js no
+     cambiaron, solo la presentación (HTML/CSS) es más sencilla. -->
+<script src="storage.js"></script>
+<script src="cookies.js"></script>
+<script src="seguridad.js"></script>
+<script src="validaciones.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>
